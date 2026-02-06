@@ -130,6 +130,7 @@
 - if target_percent present, 0 < target_percent <= 100
 - target_rir >= 0 when present
 - only one of exercise_catalog_entry_id or custom_exercise_entry_id
+- planned prescription applies uniformly across all sets; actual set performance can vary
 
 ## Entity: StrengthSetPerformance
 
@@ -168,10 +169,9 @@
 - work_time_unit (nullable)
 - work_distance_unit (nullable)
 - rest_value
-- rest_time_unit
-- input_time_seconds
-- input_distance
-- input_speed
+- rest_type (time, distance)
+- rest_time_unit (nullable)
+- rest_distance_unit (nullable)
 
 **Relationships**:
 - belongs to WorkoutSession
@@ -182,7 +182,9 @@
 - work_value > 0
 - rest_value >= 0
 - interval_type = lss implies rounds = 1 and rest_value = 0
-- for cardio inputs, require any two of time, distance, speed, derive the third in the UI/API, and store all three values in the input fields
+- round metrics are stored in CardioIntervalRoundPerformance and derived per round
+- work_type and rest_type may differ (e.g., distance work, time rest)
+- planned interval values apply uniformly across all rounds; actual round performance can vary
 
 ## Entity: CardioIntervalRoundPerformance
 
@@ -192,10 +194,13 @@
 - id
 - cardio_interval_entry_id
 - round_index
-- actual_work_value
-- actual_rest_value
-- time_unit (nullable)
-- distance_unit (nullable)
+- round_time_seconds
+- round_distance
+- round_speed
+- rest_value
+- rest_type (time, distance)
+- rest_time_unit (nullable)
+- rest_distance_unit (nullable)
 - notes (nullable)
 
 **Relationships**:
@@ -203,8 +208,12 @@
 
 **Validations**:
 - round_index > 0
-- actual_work_value > 0
-- actual_rest_value >= 0
+- round_time_seconds > 0
+- round_distance > 0
+- round_speed > 0
+- rest_value >= 0
+- require any two of time, distance, speed, derive the third in the UI/API, and store all three values for each round
+- rest_type determines whether rest_time_unit or rest_distance_unit is required
 
 ## State Transitions
 

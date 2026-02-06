@@ -25,7 +25,7 @@ Deliver a Phoenix LiveView web app that lets users log strength and cardio worko
 **Target Platform**: Web (Phoenix LiveView)
 **Project Type**: Web application  
 **Performance Goals**: History list renders in <2 seconds for up to 200 sessions  
-**Constraints**: No training plans/routines; anonymous data is local-only; LSS modeled as interval with 1 round; store all three LSS values in the input fields after deriving the missing one  
+**Constraints**: No training plans/routines; anonymous data is local-only; LSS modeled as interval with 1 round; store all three cardio metrics per round after deriving the missing one  
 **Scale/Scope**: MVP for individual users; primary flows are logging strength/cardio and viewing history
 
 ## Constitution Check

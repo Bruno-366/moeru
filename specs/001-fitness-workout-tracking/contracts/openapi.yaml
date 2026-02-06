@@ -401,18 +401,19 @@ components:
           type: number
         rest_value:
           type: number
-        input_time_seconds:
-          type: number
+        rest_type:
+          type: string
+          enum: [time, distance]
+        rest_time_unit:
+          type: string
           nullable: true
-        input_distance:
-          type: number
+        rest_distance_unit:
+          type: string
           nullable: true
-        input_speed:
-          type: number
-          nullable: true
+          description: Planned rest per round; applies uniformly across all rounds.
     CardioIntervalCreate:
       type: object
-      required: [interval_type, position, rounds, work_type, work_value, rest_value]
+      required: [interval_type, position, rounds, work_type, work_value, rest_value, rest_type]
       properties:
         interval_type:
           type: string
@@ -428,17 +429,18 @@ components:
           type: number
         rest_value:
           type: number
-        input_time_seconds:
-          type: number
+        rest_type:
+          type: string
+          enum: [time, distance]
+        rest_time_unit:
+          type: string
           nullable: true
-        input_distance:
-          type: number
-          nullable: true
-        input_speed:
-          type: number
+        rest_distance_unit:
+          type: string
           nullable: true
     CardioRound:
       type: object
+      required: [round_time_seconds, round_distance, round_speed, rest_value, rest_type]
       properties:
         id:
           type: string
@@ -446,23 +448,52 @@ components:
           type: string
         round_index:
           type: integer
-        actual_work_value:
+        round_time_seconds:
           type: number
-        actual_rest_value:
+        round_distance:
           type: number
+        round_speed:
+          type: number
+        rest_value:
+          type: number
+        rest_type:
+          type: string
+          enum: [time, distance]
+        rest_time_unit:
+          type: string
+          nullable: true
+        rest_distance_unit:
+          type: string
+          nullable: true
         notes:
           type: string
           nullable: true
     CardioRoundCreate:
       type: object
-      required: [round_index, actual_work_value, actual_rest_value]
+      required: [round_index, rest_value, rest_type]
       properties:
         round_index:
           type: integer
-        actual_work_value:
+        round_time_seconds:
           type: number
-        actual_rest_value:
+          nullable: true
+        round_distance:
           type: number
+          nullable: true
+        round_speed:
+          type: number
+          nullable: true
+        rest_value:
+          type: number
+        rest_type:
+          type: string
+          enum: [time, distance]
+        rest_time_unit:
+          type: string
+          nullable: true
+        rest_distance_unit:
+          type: string
+          nullable: true
         notes:
           type: string
           nullable: true

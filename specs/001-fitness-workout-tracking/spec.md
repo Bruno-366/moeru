@@ -12,8 +12,8 @@
 - Q: What authentication model should the app use? -> A: Allow anonymous usage with optional sign-up later.
 - Q: How should percent-based prescriptions work when no 1RM is available? -> A: Allow saving with explicit working weight (no 1RM needed).
 - Q: Where is anonymous data stored? -> A: Local-only (cleared on device/browser reset).
-- Q: Should derived values (e.g., inferred LSS time/distance) be stored? -> A: Store all three values in the input fields after deriving the missing one, for both LSS and HIIT.
-- Q: Will workouts be logged via both web UI and API? -> A: Yes, web UI is primary and a public API can support CLI usage.
+- Q: Should derived values (e.g., inferred LSS time/distance) be stored? -> A: Store all three round metrics (time/distance/speed) after deriving the missing one, for both LSS and HIIT.
+- Q: Will workouts be logged via both web UI and API? -> A: Yes, the API is for app users (web UI and CLI), not third-party integrations.
 - Q: How should exercises be selected? -> A: Hybrid: catalog with option to add custom entries.
 - Q: How should LSS be modeled and what inputs are allowed? -> A: Model LSS as an interval with 1 round; allow time + distance input and derive speed when provided.
 - Q: Should interval sessions capture per-round actuals? -> A: Yes, users should be able to log actuals per round.
@@ -47,6 +47,7 @@ As a user, I can record a strength workout using common prescription notation an
 2. **Given** a prescription with a rep range like "4x8-12", **When** I log completion with at least 8 reps for each set, **Then** the system marks the target as met but does not require progression until 12 reps are achieved.
 3. **Given** a prescription with a percent like "8x3 @ 75%", **When** I select a 1RM value for the exercise, **Then** the system records the target load as 75% of that 1RM.
 4. **Given** a prescription with RIR like "4x8-12 @ 2 RIR", **When** I save the session, **Then** the system stores the intended RIR and applies it to the target interpretation for that exercise.
+5. **Given** I attempt to create a training plan or routine, **When** I submit it, **Then** the system blocks it and explains that plans are not supported.
 
 ---
 
@@ -64,6 +65,7 @@ As a user, I can record cardio workouts in either steady pace (LSS) or interval 
 2. **Given** I am logging an LSS workout, **When** I enter time and speed, **Then** the system stores the inputs and derives distance.
 3. **Given** I am logging an LSS workout, **When** I enter distance and speed, **Then** the system stores the inputs and derives time.
 4. **Given** I am logging intervals with "Work : Rest x Rounds", **When** I enter work duration or distance, rest time, and number of rounds, **Then** the system stores those values as a structured interval plan.
+5. **Given** I am logging interval rounds, **When** I enter any two of time, distance, or speed for a round, **Then** the system derives the third and stores all three values for that round.
 
 ---
 
@@ -90,6 +92,8 @@ As a user, I can review past workouts to see what I intended to do and what I co
 - Percent-based prescriptions when no 1RM is available for the exercise; allow explicit working weight entry.
 - LSS entry provides only time or distance without a second value; the system does not infer the missing value.
 - Interval entry has zero rounds or rest time; the system blocks invalid values and explains the issue.
+- Planned cardio intervals are uniform across rounds; actual rounds may vary in performance.
+- Planned strength prescriptions are uniform across sets; actual sets may vary in reps.
 - Mixed units in a session (e.g., distance in miles, speed in km/h); the system prevents inconsistent units or prompts correction.
 - Anonymous data loss after browser reset or data clearing; the system warns users when they are not signed in.
 
@@ -111,10 +115,10 @@ As a user, I can review past workouts to see what I intended to do and what I co
 - **FR-006**: System MUST determine and display whether a strength target is met based on the prescription rules (e.g., rep range floor met, percent-based load recorded).
 - **FR-007**: System MUST allow users to create and save cardio workout sessions in LSS and interval formats.
 - **FR-008**: System MUST model LSS workouts as intervals with 1 round and a rest value of 0.
-- **FR-009**: For cardio interval entries (LSS and HIIT), system MUST accept any two of time, distance, and speed, derive the third, and store all three.
-- **FR-010**: When one cardio field is derived (speed, time, or distance), system MUST store all three values together in the input fields.
+- **FR-009**: For cardio interval rounds (LSS and HIIT), system MUST accept any two of time, distance, and speed, derive the third, and store all three per round.
+- **FR-010**: System MUST derive session totals from round data when needed.
 - **FR-011**: For interval workouts, system MUST capture work duration or distance, rest time, and number of rounds, with a uniform value per round.
-- **FR-011a**: System MUST allow users to log actual work and rest values per round for interval workouts.
+- **FR-011a**: System MUST allow users to log any two of time, distance, or speed per round and derive the third for interval workouts.
 - **FR-012**: System MUST prevent creation of training plans or routines; only individual sessions are supported.
 - **FR-013**: System MUST allow users to view, edit, and delete previously logged sessions.
 - **FR-014**: System MUST store units of measure (weight, distance, time, speed) alongside the values entered by the user.
@@ -140,8 +144,8 @@ As a user, I can review past workouts to see what I intended to do and what I co
 - Users supply or update their own 1RM values; the system does not estimate 1RM automatically.
 - No automatic training plans, routines, or scheduling are included.
 - Unit preferences are stored per user, but entries preserve the unit used at the time of logging.
-- Derived values are stored alongside user-entered values in the input fields for both LSS and HIIT.
-- The API supports first-party clients (web UI and CLI); third-party integrations are out of scope.
+- Derived values are stored alongside user-entered values per round; session totals are derived from rounds when needed.
+- The API is intended for app users via the web UI or CLI; third-party integrations are out of scope.
 
 ## Success Criteria *(mandatory)*
 

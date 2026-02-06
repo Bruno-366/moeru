@@ -73,9 +73,10 @@ description: "Task list for fitness workout tracking implementation"
 ### Implementation
 
 - [ ] T018 [US2] Add cardio interval schemas in lib/moeru/workouts/cardio_interval_entry.ex and lib/moeru/workouts/cardio_interval_round_performance.ex with migrations in priv/repo/migrations/*_create_cardio_interval_entries.exs and *_create_cardio_interval_round_performances.exs
-- [ ] T019 [US2] Implement cardio input derivation and validation in lib/moeru/workouts/cardio_interval.ex (accept any two inputs, derive third, store all three)
-- [ ] T020 [US2] Build cardio logging LiveView in lib/moeru_web/live/workouts/cardio_live.ex (interval form + per-round actuals)
-- [ ] T021 [P] [US2] Add API endpoints for cardio intervals and rounds in lib/moeru_web/controllers/cardio_interval_controller.ex, lib/moeru_web/controllers/cardio_round_controller.ex and routes in lib/moeru_web/router.ex
+- [ ] T019 [US2] Implement per-round cardio derivation and validation in lib/moeru/workouts/cardio_interval.ex (accept any two round metrics, derive third, store all three)
+- [ ] T020 [US2] Implement cardio prescription parsing and target evaluation in lib/moeru/workouts/cardio_prescription.ex
+- [ ] T021 [US2] Build cardio logging LiveView in lib/moeru_web/live/workouts/cardio_live.ex (interval form + per-round actuals)
+- [ ] T022 [P] [US2] Add API endpoints for cardio intervals and rounds in lib/moeru_web/controllers/cardio_interval_controller.ex, lib/moeru_web/controllers/cardio_round_controller.ex and routes in lib/moeru_web/router.ex
 
 **Checkpoint**: Cardio logging is functional and independently testable
 
@@ -89,15 +90,15 @@ description: "Task list for fitness workout tracking implementation"
 
 ### Tests
 
-- [ ] T022 [P] [US3] Add LiveView tests for history list/detail in test/moeru_web/live/workouts/history_live_test.exs
-- [ ] T023 [P] [US3] Add context tests for history queries in test/moeru/workouts/history_test.exs
+- [ ] T023 [P] [US3] Add LiveView tests for history list/detail in test/moeru_web/live/workouts/history_live_test.exs
+- [ ] T024 [P] [US3] Add context tests for history queries in test/moeru/workouts/history_test.exs
 
 ### Implementation
 
-- [ ] T024 [US3] Implement history queries with preloads in lib/moeru/workouts.ex (list sessions, get session with entries)
-- [ ] T025 [US3] Build history LiveView list/detail with edit/delete actions in lib/moeru_web/live/workouts/history_live.ex using streams
-- [ ] T026 [US3] Add history routes in lib/moeru_web/router.ex
-- [ ] T027 [US3] Add edit/delete API endpoints for sessions in lib/moeru_web/controllers/workout_controller.ex and routes in lib/moeru_web/router.ex
+- [ ] T025 [US3] Implement history queries with preloads in lib/moeru/workouts.ex (list sessions, get session with entries)
+- [ ] T026 [US3] Build history LiveView list/detail with edit/delete actions in lib/moeru_web/live/workouts/history_live.ex using streams
+- [ ] T027 [US3] Add history routes in lib/moeru_web/router.ex
+- [ ] T028 [US3] Add edit/delete API endpoints for sessions in lib/moeru_web/controllers/workout_controller.ex and routes in lib/moeru_web/router.ex
 
 **Checkpoint**: History view is functional and independently testable
 
@@ -107,10 +108,10 @@ description: "Task list for fitness workout tracking implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T028 [P] Add anonymous-mode warning UI in lib/moeru_web/live/workouts/strength_live.ex, lib/moeru_web/live/workouts/cardio_live.ex, lib/moeru_web/live/workouts/history_live.ex
-- [ ] T029 [P] Add empty states and loading feedback in lib/moeru_web/live/workouts/strength_live.ex, lib/moeru_web/live/workouts/cardio_live.ex, lib/moeru_web/live/workouts/history_live.ex
-- [ ] T030 [P] Update CLI/API usage notes in specs/001-fitness-workout-tracking/quickstart.md
-- [ ] T031 Run quickstart smoke test steps and record any gaps in specs/001-fitness-workout-tracking/quickstart.md
+- [ ] T029 [P] Add anonymous-mode warning UI in lib/moeru_web/live/workouts/strength_live.ex, lib/moeru_web/live/workouts/cardio_live.ex, lib/moeru_web/live/workouts/history_live.ex
+- [ ] T030 [P] Add empty states and loading feedback in lib/moeru_web/live/workouts/strength_live.ex, lib/moeru_web/live/workouts/cardio_live.ex, lib/moeru_web/live/workouts/history_live.ex
+- [ ] T031 [P] Update CLI/API usage notes in specs/001-fitness-workout-tracking/quickstart.md
+- [ ] T032 Run quickstart smoke test steps and record any gaps in specs/001-fitness-workout-tracking/quickstart.md
 
 ---
 
@@ -133,9 +134,9 @@ description: "Task list for fitness workout tracking implementation"
 
 - Foundational: T004, T005, and T007 can be done in parallel
 - User Story 1: T009 and T013 can run in parallel with schema work after T011 starts
-- User Story 2: T016 and T021 can run in parallel with schema work after T018 starts
-- User Story 3: T022 and T027 can run in parallel with T024 and T025
-- Polish: T028 and T030 can run in parallel
+- User Story 2: T016 and T022 can run in parallel with schema work after T018 starts
+- User Story 3: T023 and T028 can run in parallel with T025 and T026
+- Polish: T029 and T031 can run in parallel
 
 ---
 
