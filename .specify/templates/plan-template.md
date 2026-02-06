@@ -31,7 +31,10 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Quality & Testing: Planned tests or explicit rationale for any gaps.
+- User Experience: UX/accessibility impact reviewed for user-facing changes.
+- Security & Privacy: Risk considerations documented for data-handling changes.
+- Maintainability: Complexity justified with documented tradeoffs when needed.
 
 ## Project Structure
 
