@@ -410,15 +410,6 @@ components:
         input_speed:
           type: number
           nullable: true
-        derived_time_seconds:
-          type: number
-          nullable: true
-        derived_distance:
-          type: number
-          nullable: true
-        derived_speed:
-          type: number
-          nullable: true
     CardioIntervalCreate:
       type: object
       required: [interval_type, position, rounds, work_type, work_value, rest_value]
@@ -444,15 +435,6 @@ components:
           type: number
           nullable: true
         input_speed:
-          type: number
-          nullable: true
-        derived_time_seconds:
-          type: number
-          nullable: true
-        derived_distance:
-          type: number
-          nullable: true
-        derived_speed:
           type: number
           nullable: true
     CardioRound:
@@ -515,8 +497,6 @@ components:
         custom_exercise_id:
           type: string
           nullable: true
-        max_type:
-          type: string
         value:
           type: number
         unit:
@@ -526,7 +506,7 @@ components:
           format: date-time
     ExerciseMaxCreate:
       type: object
-      required: [max_type, value, unit]
+      required: [value, unit]
       properties:
         exercise_id:
           type: string
@@ -534,8 +514,6 @@ components:
         custom_exercise_id:
           type: string
           nullable: true
-        max_type:
-          type: string
         value:
           type: number
         unit:

@@ -17,14 +17,15 @@ Deliver a Phoenix LiveView web app that lets users log strength and cardio worko
   the iteration process.
 -->
 
-**Language/Version**: Elixir 1.15  
+**Language/Version**: Elixir 1.19.5  
 **Primary Dependencies**: Phoenix 1.8.3, Phoenix LiveView 1.1.0, Ecto 3.13, Postgrex, Tailwind 4.1.12  
 **Storage**: PostgreSQL for authenticated users; browser local storage for anonymous sessions  
 **Testing**: ExUnit, Phoenix LiveView Test, Ecto SQL Sandbox  
+**Scaffolding**: `mix phx.gen.auth`, `mix phx.gen.live` for baseline scaffolds (customized afterward)  
 **Target Platform**: Web (Phoenix LiveView)
 **Project Type**: Web application  
 **Performance Goals**: History list renders in <2 seconds for up to 200 sessions  
-**Constraints**: No training plans/routines; anonymous data is local-only; LSS modeled as interval with 1 round; store user-entered values plus derived values  
+**Constraints**: No training plans/routines; anonymous data is local-only; LSS modeled as interval with 1 round; store all three LSS values in the input fields after deriving the missing one  
 **Scale/Scope**: MVP for individual users; primary flows are logging strength/cardio and viewing history
 
 ## Constitution Check

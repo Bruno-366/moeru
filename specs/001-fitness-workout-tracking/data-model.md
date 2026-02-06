@@ -2,14 +2,14 @@
 
 ## Entity: User
 
-**Purpose**: Represents an account with unit preferences and personal maxes.
+**Purpose**: Represents an account with preferred display units and personal maxes.
 
 **Fields**:
 - id
 - email (nullable when anonymous)
-- weight_unit (kg, lb)
-- distance_unit (km, mi, m)
-- speed_unit (km/h, mi/h, m/s)
+- weight_unit (kg, lb) - preferred display unit
+- distance_unit (km, mi, m) - preferred display unit
+- speed_unit (km/h, mi/h, m/s) - preferred display unit
 - timezone
 - inserted_at, updated_at
 
@@ -57,15 +57,14 @@
 
 ## Entity: ExerciseMax
 
-**Purpose**: Stores user maxes per exercise (1RM or other max types).
+**Purpose**: Stores user 1RM values per exercise (other maxes are converted before storage).
 
 **Fields**:
 - id
 - user_id
 - exercise_catalog_entry_id (nullable)
 - custom_exercise_entry_id (nullable)
-- max_type (one_rm, five_rm, etc)
-- value
+- value (1RM)
 - unit
 - measured_at
 
@@ -170,12 +169,9 @@
 - work_distance_unit (nullable)
 - rest_value
 - rest_time_unit
-- input_time_seconds (nullable)
-- input_distance (nullable)
-- input_speed (nullable)
-- derived_time_seconds (nullable)
-- derived_distance (nullable)
-- derived_speed (nullable)
+- input_time_seconds
+- input_distance
+- input_speed
 
 **Relationships**:
 - belongs to WorkoutSession
@@ -186,7 +182,7 @@
 - work_value > 0
 - rest_value >= 0
 - interval_type = lss implies rounds = 1 and rest_value = 0
-- for LSS inputs, require any two of time, distance, speed and store the derived third
+- for cardio inputs, require any two of time, distance, speed, derive the third in the UI/API, and store all three values in the input fields
 
 ## Entity: CardioIntervalRoundPerformance
 

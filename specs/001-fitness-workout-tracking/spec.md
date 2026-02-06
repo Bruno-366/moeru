@@ -12,7 +12,8 @@
 - Q: What authentication model should the app use? -> A: Allow anonymous usage with optional sign-up later.
 - Q: How should percent-based prescriptions work when no 1RM is available? -> A: Allow saving with explicit working weight (no 1RM needed).
 - Q: Where is anonymous data stored? -> A: Local-only (cleared on device/browser reset).
-- Q: Should derived values (e.g., inferred LSS time/distance) be stored? -> A: Store user-entered values and the derived result.
+- Q: Should derived values (e.g., inferred LSS time/distance) be stored? -> A: Store all three values in the input fields after deriving the missing one, for both LSS and HIIT.
+- Q: Will workouts be logged via both web UI and API? -> A: Yes, web UI is primary and a public API can support CLI usage.
 - Q: How should exercises be selected? -> A: Hybrid: catalog with option to add custom entries.
 - Q: How should LSS be modeled and what inputs are allowed? -> A: Model LSS as an interval with 1 round; allow time + distance input and derive speed when provided.
 - Q: Should interval sessions capture per-round actuals? -> A: Yes, users should be able to log actuals per round.
@@ -110,8 +111,8 @@ As a user, I can review past workouts to see what I intended to do and what I co
 - **FR-006**: System MUST determine and display whether a strength target is met based on the prescription rules (e.g., rep range floor met, percent-based load recorded).
 - **FR-007**: System MUST allow users to create and save cardio workout sessions in LSS and interval formats.
 - **FR-008**: System MUST model LSS workouts as intervals with 1 round and a rest value of 0.
-- **FR-009**: For LSS workouts, system MUST accept time + distance, time + speed, or distance + speed.
-- **FR-010**: When one LSS field is derived (speed, time, or distance), system MUST store the two user-entered values and the derived result.
+- **FR-009**: For cardio interval entries (LSS and HIIT), system MUST accept any two of time, distance, and speed, derive the third, and store all three.
+- **FR-010**: When one cardio field is derived (speed, time, or distance), system MUST store all three values together in the input fields.
 - **FR-011**: For interval workouts, system MUST capture work duration or distance, rest time, and number of rounds, with a uniform value per round.
 - **FR-011a**: System MUST allow users to log actual work and rest values per round for interval workouts.
 - **FR-012**: System MUST prevent creation of training plans or routines; only individual sessions are supported.
@@ -139,7 +140,8 @@ As a user, I can review past workouts to see what I intended to do and what I co
 - Users supply or update their own 1RM values; the system does not estimate 1RM automatically.
 - No automatic training plans, routines, or scheduling are included.
 - Unit preferences are stored per user, but entries preserve the unit used at the time of logging.
-- Derived values are stored alongside the user-entered values.
+- Derived values are stored alongside user-entered values in the input fields for both LSS and HIIT.
+- The API supports first-party clients (web UI and CLI); third-party integrations are out of scope.
 
 ## Success Criteria *(mandatory)*
 
