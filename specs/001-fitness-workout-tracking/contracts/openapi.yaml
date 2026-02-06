@@ -1,0 +1,568 @@
+openapi: 3.0.3
+info:
+  title: Fitness Workout Tracking API
+  version: 1.0.0
+servers:
+  - url: https://example.com
+paths:
+  /workouts:
+    get:
+      summary: List workout sessions
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WorkoutSession"
+    post:
+      summary: Create a workout session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkoutSessionCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkoutSession"
+  /workouts/{workoutId}:
+    get:
+      summary: Get a workout session
+      parameters:
+        - $ref: "#/components/parameters/WorkoutId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkoutSession"
+    put:
+      summary: Update a workout session
+      parameters:
+        - $ref: "#/components/parameters/WorkoutId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkoutSessionUpdate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkoutSession"
+    delete:
+      summary: Delete a workout session
+      parameters:
+        - $ref: "#/components/parameters/WorkoutId"
+      responses:
+        "204":
+          description: No Content
+  /workouts/{workoutId}/strength-entries:
+    post:
+      summary: Add a strength exercise entry
+      parameters:
+        - $ref: "#/components/parameters/WorkoutId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrengthEntryCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrengthEntry"
+  /strength-entries/{strengthEntryId}/sets:
+    post:
+      summary: Add a strength set performance
+      parameters:
+        - $ref: "#/components/parameters/StrengthEntryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrengthSetCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrengthSet"
+  /workouts/{workoutId}/cardio-intervals:
+    post:
+      summary: Add a cardio interval entry (HIIT or LSS)
+      parameters:
+        - $ref: "#/components/parameters/WorkoutId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CardioIntervalCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CardioInterval"
+  /cardio-intervals/{intervalId}/rounds:
+    post:
+      summary: Add a cardio interval round performance
+      parameters:
+        - $ref: "#/components/parameters/IntervalId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CardioRoundCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CardioRound"
+  /exercises/catalog:
+    get:
+      summary: List predefined exercises
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExerciseCatalogEntry"
+  /exercises/custom:
+    post:
+      summary: Create a custom exercise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomExerciseCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomExerciseEntry"
+  /exercise-maxes:
+    post:
+      summary: Create or update a user exercise max
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseMaxCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseMax"
+  /local-import:
+    post:
+      summary: Import anonymous local data after signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocalImportPayload"
+      responses:
+        "200":
+          description: Imported
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocalImportResult"
+components:
+  parameters:
+    WorkoutId:
+      name: workoutId
+      in: path
+      required: true
+      schema:
+        type: string
+    StrengthEntryId:
+      name: strengthEntryId
+      in: path
+      required: true
+      schema:
+        type: string
+    IntervalId:
+      name: intervalId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    WorkoutSession:
+      type: object
+      properties:
+        id:
+          type: string
+        session_type:
+          type: string
+          enum: [strength, cardio]
+        performed_at:
+          type: string
+          format: date-time
+        duration_seconds:
+          type: integer
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+    WorkoutSessionCreate:
+      type: object
+      required: [session_type, performed_at]
+      properties:
+        session_type:
+          type: string
+          enum: [strength, cardio]
+        performed_at:
+          type: string
+          format: date-time
+        duration_seconds:
+          type: integer
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+    WorkoutSessionUpdate:
+      type: object
+      properties:
+        performed_at:
+          type: string
+          format: date-time
+        duration_seconds:
+          type: integer
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+    StrengthEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        workout_session_id:
+          type: string
+        exercise_id:
+          type: string
+          nullable: true
+        custom_exercise_id:
+          type: string
+          nullable: true
+        position:
+          type: integer
+        target_sets:
+          type: integer
+        target_reps_min:
+          type: integer
+        target_reps_max:
+          type: integer
+          nullable: true
+        target_percent:
+          type: number
+          nullable: true
+        target_rir:
+          type: number
+          nullable: true
+        target_load:
+          type: number
+          nullable: true
+        target_load_unit:
+          type: string
+          nullable: true
+        prescription_raw:
+          type: string
+          nullable: true
+    StrengthEntryCreate:
+      type: object
+      required: [position, target_sets, target_reps_min]
+      properties:
+        exercise_id:
+          type: string
+          nullable: true
+        custom_exercise_id:
+          type: string
+          nullable: true
+        position:
+          type: integer
+        target_sets:
+          type: integer
+        target_reps_min:
+          type: integer
+        target_reps_max:
+          type: integer
+          nullable: true
+        target_percent:
+          type: number
+          nullable: true
+        target_rir:
+          type: number
+          nullable: true
+        target_load:
+          type: number
+          nullable: true
+        target_load_unit:
+          type: string
+          nullable: true
+        prescription_raw:
+          type: string
+          nullable: true
+    StrengthSet:
+      type: object
+      properties:
+        id:
+          type: string
+        strength_entry_id:
+          type: string
+        position:
+          type: integer
+        reps:
+          type: integer
+        load:
+          type: number
+          nullable: true
+        load_unit:
+          type: string
+          nullable: true
+        rir:
+          type: number
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+    StrengthSetCreate:
+      type: object
+      required: [position, reps]
+      properties:
+        position:
+          type: integer
+        reps:
+          type: integer
+        load:
+          type: number
+          nullable: true
+        load_unit:
+          type: string
+          nullable: true
+        rir:
+          type: number
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+    CardioInterval:
+      type: object
+      properties:
+        id:
+          type: string
+        workout_session_id:
+          type: string
+        interval_type:
+          type: string
+          enum: [lss, hiit]
+        position:
+          type: integer
+        rounds:
+          type: integer
+        work_type:
+          type: string
+          enum: [time, distance]
+        work_value:
+          type: number
+        rest_value:
+          type: number
+        input_time_seconds:
+          type: number
+          nullable: true
+        input_distance:
+          type: number
+          nullable: true
+        input_speed:
+          type: number
+          nullable: true
+        derived_time_seconds:
+          type: number
+          nullable: true
+        derived_distance:
+          type: number
+          nullable: true
+        derived_speed:
+          type: number
+          nullable: true
+    CardioIntervalCreate:
+      type: object
+      required: [interval_type, position, rounds, work_type, work_value, rest_value]
+      properties:
+        interval_type:
+          type: string
+          enum: [lss, hiit]
+        position:
+          type: integer
+        rounds:
+          type: integer
+        work_type:
+          type: string
+          enum: [time, distance]
+        work_value:
+          type: number
+        rest_value:
+          type: number
+        input_time_seconds:
+          type: number
+          nullable: true
+        input_distance:
+          type: number
+          nullable: true
+        input_speed:
+          type: number
+          nullable: true
+        derived_time_seconds:
+          type: number
+          nullable: true
+        derived_distance:
+          type: number
+          nullable: true
+        derived_speed:
+          type: number
+          nullable: true
+    CardioRound:
+      type: object
+      properties:
+        id:
+          type: string
+        cardio_interval_entry_id:
+          type: string
+        round_index:
+          type: integer
+        actual_work_value:
+          type: number
+        actual_rest_value:
+          type: number
+        notes:
+          type: string
+          nullable: true
+    CardioRoundCreate:
+      type: object
+      required: [round_index, actual_work_value, actual_rest_value]
+      properties:
+        round_index:
+          type: integer
+        actual_work_value:
+          type: number
+        actual_rest_value:
+          type: number
+        notes:
+          type: string
+          nullable: true
+    ExerciseCatalogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    CustomExerciseEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    CustomExerciseCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+    ExerciseMax:
+      type: object
+      properties:
+        id:
+          type: string
+        exercise_id:
+          type: string
+          nullable: true
+        custom_exercise_id:
+          type: string
+          nullable: true
+        max_type:
+          type: string
+        value:
+          type: number
+        unit:
+          type: string
+        measured_at:
+          type: string
+          format: date-time
+    ExerciseMaxCreate:
+      type: object
+      required: [max_type, value, unit]
+      properties:
+        exercise_id:
+          type: string
+          nullable: true
+        custom_exercise_id:
+          type: string
+          nullable: true
+        max_type:
+          type: string
+        value:
+          type: number
+        unit:
+          type: string
+        measured_at:
+          type: string
+          format: date-time
+    LocalImportPayload:
+      type: object
+      required: [device_id, schema_version, records]
+      properties:
+        device_id:
+          type: string
+        schema_version:
+          type: integer
+        records:
+          type: array
+          items:
+            type: object
+    LocalImportResult:
+      type: object
+      properties:
+        inserted:
+          type: integer
+        updated:
+          type: integer
+        id_map:
+          type: object
+          additionalProperties:
+            type: string
