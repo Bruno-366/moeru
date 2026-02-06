@@ -83,6 +83,8 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
+
 - [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
 
@@ -110,6 +112,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
 
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
+
 ### Implementation for User Story 2
 
 - [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
@@ -131,6 +135,8 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
 
 ### Implementation for User Story 3
 

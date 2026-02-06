@@ -44,6 +44,8 @@ description: "Task list for fitness workout tracking implementation"
 
 ### Tests
 
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
+
 - [ ] T009 [P] [US1] Add LiveView tests for strength logging in test/moeru_web/live/workouts/strength_live_test.exs
 - [ ] T010 [P] [US1] Add context tests for strength prescriptions and target evaluation in test/moeru/workouts/strength_prescription_test.exs
 
@@ -67,6 +69,8 @@ description: "Task list for fitness workout tracking implementation"
 
 ### Tests
 
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
+
 - [ ] T016 [P] [US2] Add LiveView tests for cardio logging in test/moeru_web/live/workouts/cardio_live_test.exs
 - [ ] T017 [P] [US2] Add context tests for cardio derivation in test/moeru/workouts/cardio_interval_test.exs
 
@@ -89,6 +93,8 @@ description: "Task list for fitness workout tracking implementation"
 **Independent Test**: After logging strength and cardio sessions, verify list and detail views show correct summaries.
 
 ### Tests
+
+> TDD note: Use spec.md acceptance scenarios and functional requirements as the source of truth for these tests.
 
 - [ ] T023 [P] [US3] Add LiveView tests for history list/detail in test/moeru_web/live/workouts/history_live_test.exs
 - [ ] T024 [P] [US3] Add context tests for history queries in test/moeru/workouts/history_test.exs
