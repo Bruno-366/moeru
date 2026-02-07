@@ -31,6 +31,9 @@ description: "Task list for fitness workout tracking implementation"
 - [ ] T006 Implement local import endpoint in lib/moeru_web/controllers/local_import_controller.ex and route it in lib/moeru_web/router.ex
 - [ ] T007 [P] Add exercise catalog/custom schemas in lib/moeru/exercises/exercise_catalog_entry.ex and lib/moeru/exercises/custom_exercise_entry.ex with migrations in priv/repo/migrations/*_create_exercise_catalog_entries.exs and priv/repo/migrations/*_create_custom_exercise_entries.exs
 - [ ] T008 Seed exercise catalog entries in priv/repo/seeds.exs
+- [ ] T033 [P] Add user preferences and 1RM schemas in lib/moeru/accounts/user_preference.ex and lib/moeru/accounts/exercise_max.ex with migrations in priv/repo/migrations/*_create_user_preferences.exs and *_create_exercise_maxes.exs
+- [ ] T034 [P] Add shared measurement/unit validation helpers in lib/moeru/workouts/measurement.ex (unit enums, mixed-unit checks, and normalization rules)
+- [ ] T035 [P] Add anonymous-to-account association flow in lib/moeru_web/controllers/local_import_controller.ex and lib/moeru_web/router.ex (import local data after sign-up)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -48,6 +51,8 @@ description: "Task list for fitness workout tracking implementation"
 
 - [ ] T009 [P] [US1] Add LiveView tests for strength logging in test/moeru_web/live/workouts/strength_live_test.exs
 - [ ] T010 [P] [US1] Add context tests for strength prescriptions and target evaluation in test/moeru/workouts/strength_prescription_test.exs
+- [ ] T036 [P] [US1] Add tests for unit validation and mixed-unit blocking in test/moeru/workouts/strength_units_test.exs
+- [ ] T037 [P] [US1] Add tests for percent prescriptions using 1RM or explicit working weight in test/moeru/workouts/strength_percent_test.exs
 
 ### Implementation
 
@@ -56,6 +61,8 @@ description: "Task list for fitness workout tracking implementation"
 - [ ] T013 [P] [US1] Implement prescription parsing and target evaluation in lib/moeru/workouts/strength_prescription.ex
 - [ ] T014 [US1] Build strength logging LiveView in lib/moeru_web/live/workouts/strength_live.ex (forms using `<.input>`, stream entries)
 - [ ] T015 [P] [US1] Add API endpoints for sessions and strength entries/sets in lib/moeru_web/controllers/workout_controller.ex, lib/moeru_web/controllers/strength_entry_controller.ex, lib/moeru_web/controllers/strength_set_controller.ex and routes in lib/moeru_web/router.ex
+- [ ] T038 [US1] Add unit fields and mixed-unit guards to strength changesets and LiveView validation in lib/moeru/workouts/strength_exercise_entry.ex and lib/moeru_web/live/workouts/strength_live.ex
+- [ ] T039 [US1] Build exercise catalog + custom selector UI in lib/moeru_web/live/workouts/strength_live.ex (catalog search, custom add)
 
 **Checkpoint**: Strength logging is functional and independently testable
 
@@ -73,6 +80,7 @@ description: "Task list for fitness workout tracking implementation"
 
 - [ ] T016 [P] [US2] Add LiveView tests for cardio logging in test/moeru_web/live/workouts/cardio_live_test.exs
 - [ ] T017 [P] [US2] Add context tests for cardio derivation in test/moeru/workouts/cardio_interval_test.exs
+- [ ] T040 [P] [US2] Add tests for cardio totals derivation and single-metric validation in test/moeru/workouts/cardio_totals_test.exs
 
 ### Implementation
 
@@ -81,6 +89,7 @@ description: "Task list for fitness workout tracking implementation"
 - [ ] T020 [US2] Implement cardio prescription parsing and target evaluation in lib/moeru/workouts/cardio_prescription.ex
 - [ ] T021 [US2] Build cardio logging LiveView in lib/moeru_web/live/workouts/cardio_live.ex (interval form + per-round actuals)
 - [ ] T022 [P] [US2] Add API endpoints for cardio intervals and rounds in lib/moeru_web/controllers/cardio_interval_controller.ex, lib/moeru_web/controllers/cardio_round_controller.ex and routes in lib/moeru_web/router.ex
+- [ ] T041 [US2] Implement cardio totals derivation and mixed-unit guards in lib/moeru/workouts/cardio_interval.ex and lib/moeru_web/live/workouts/cardio_live.ex
 
 **Checkpoint**: Cardio logging is functional and independently testable
 
